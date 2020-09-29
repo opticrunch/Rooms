@@ -4,30 +4,31 @@
 # Function to print the HUD and room map current_room value
 def print_room_hud():
     print('_______________________________________________')
-    print('PLAYER: ' + player_name + ' | AGE: ' + str(player_age)
-          + ' | ROOM: ' + current_room + ' | HEALTH: ' + str(health))
+    print('PLAYER: ' + player.name + ' | AGE: ' + str(player.age)
+          + ' | ROOM: ' + player.current_room + ' | HEALTH: '
+          + str(player.health))
     print('      _________')
-    if current_room == "Green":
+    if player.current_room == "Green":
         print(' MAP |    X    |  COMPASS   N')
     else:
         print(' MAP |         |  COMPASS   N')
     print('     |___   ___|          W + E')
     print('|----|         |----|       S')
-    if current_room == "Blue":
+    if player.current_room == "Blue":
         print('|         X         |')
-    elif current_room == "Yellow":
+    elif player.current_room == "Yellow":
         print('| X                 |')
-    elif current_room == "Red":
+    elif player.current_room == "Red":
         print('|                 X |')
     else:
         print('|                   |')
-    if have_red_key == 1:
+    if player.have_red_key == 1:
         print('|----|___   ___|----|    RED KEY')
     else:
         print('|----|___   ___|----|')
-    if have_red_key == 1:
+    if player.have_red_key == 1:
         print('     |         |          0--m')
-    elif current_room == "Purple":
+    elif player.current_room == "Purple":
         print('     |    X    |')
     else:
         print('     |         |')
@@ -38,11 +39,11 @@ def print_room_hud():
 # Function to print the room info based on the current_room value
 def get_room_info():
     print_room_hud()
-    if current_room == "Blue":
+    if player.current_room == "Blue":
         print('You are in a room with blue walls.')
         print('There is a blue light bulb on the wall switched to '
-              + bulb_blue + '.')
-        print('There is a number ' + str(code_number1)
+              + blue_room.bulb + '.')
+        print('There is a number ' + str(blue_room.wall_code)
               + ' scribbled on the wall.')
         print('There is a green door to the North, a yellow door to the West,')
         print('a red door to the East, and a purple door to the South.')
@@ -50,11 +51,11 @@ def get_room_info():
         print('       1) Go North            5) Light bulb')
         print('2) Go West    3) Go East')
         print('       4) Go South')
-    elif current_room == "Yellow":
+    elif player.current_room == "Yellow":
         print('You are in a room with yellow walls.')
         print('There is a yellow light bulb on the wall switched to '
-              + bulb_yellow + '.')
-        print('There is a number ' + str(code_number2)
+              + yellow_room.bulb + '.')
+        print('There is a number ' + str(yellow_room.wall_code)
               + ' scribbled on the wall.')
         print('There is an electrical device on the wall that might'
               ' supply power somewhere.')
@@ -63,35 +64,35 @@ def get_room_info():
         print('       1)                     5) Light bulb')
         print('2)            3) Go East      6) Device')
         print('       4)')
-    elif current_room == "Green":
+    elif player.current_room == "Green":
         print('You are in a room with green walls.')
-        print('There is a number ' + str(code_number3)
+        print('There is a number ' + str(green_room.wall_code)
               + ' scribbled on the wall.')
-        if have_red_key == 0 and lock_red == 0:
+        if player.have_red_key == 0 and red_room.lock == 0:
             print('There is a RED KEY on the ground.')
         print('There is a blue door to the South.')
         print('______________ENTER A SELECTION______________')
-        if have_red_key == 0 and lock_red == 0:
+        if player.have_red_key == 0 and red_room.lock == 0:
             print('       1)                     5) Red key')
         else:
             print('       1)')
         print('2)            3)')
         print('       4) Go South')
-    elif current_room == "Red":
+    elif player.current_room == "Red":
         print('You are in a room with red walls.')
-        print('There is a number ' + str(code_number4)
+        print('There is a number ' + str(red_room.wall_code)
               + ' scribbled on the wall.')
         print('There is a red light bulb on the wall switched to '
-              + bulb_red + '.')
+              + red_room.bulb + '.')
         print('There is a blue door to the West.')
         print('______________ENTER A SELECTION______________')
         print('       1)                     5) Light bulb')
         print('2) Go West    3)')
         print('       4)')
-    elif current_room == "Purple":
+    elif player.current_room == "Purple":
         print('You are in a room with purple walls.')
         print('There is a red light bulb on the wall switched to '
-              + bulb_red + '.')
+              + red_room.bulb + '.')
         print('There is a blue door to the North and a door'
               ' labeled EXIT to the South.')
         print('______________ENTER A SELECTION______________')
@@ -122,11 +123,11 @@ def get_win_screen(ending_health):
     print('    |    |  |    |      |    WITH ' + str(ending_health))
     print('    |    |  |    |     / \   HEALTH')
     print(' ______________________________________')
-    print('Great job, ' + player_name + '!')
+    print('Great job, ' + player.name + '!')
 
     # Creates a file and writes to it
     certificate = open('CertificateOfVictory.txt', 'w')
-    certificate.write('This certificate is proof that\n' + player_name +
+    certificate.write('This certificate is proof that\n' + player.name +
                       '\nescaped the mysterious\nROOMS: Five Colors'
                       '\n ______________________________________'
                       '\n     ____________  CONGRATULATIONS!'
@@ -138,22 +139,40 @@ def get_win_screen(ending_health):
                       '\n ______________________________________')
 
 
-# Initialize global variables
-current_room = 'Blue'
-have_red_key = bool(0)
-bulb_blue = 'OFF'
-bulb_yellow = 'OFF'
-bulb_red_power = bool(0)
-bulb_red = 'OFF'
-lock_green = bool(0)
-lock_red = bool(0)
-lock_purple = bool(0)
-win = bool(0)
-game_start = bool(0)
-health = int(50)
+# Define the class player
+class Player:
+    """Class to store all player attributes and eliminate need for
+    global variables"""
+    name = str()
+    age = int()
+    difficulty = str()
+    current_room = str('Blue')
+    health = int()
+    have_red_key = bool(0)
+    win = bool(0)
+    game_start = bool(0)
+
+
+# Define the room class
+class Room:
+    """Class to store attributes of the rooms"""
+    lock = bool(0)
+    bulb = 'OFF'
+    bulb_power = bool(0)
+    wall_code = int()
+
+
+# Initialize the player and room classes
+player = Player()
+blue_room = Room()
+yellow_room = Room()
+green_room = Room()
+red_room = Room()
+purple_room = Room()
+
 
 # Title screen loop start
-while game_start == 0:
+while player.game_start == 0:
 
     # Print the title screen utilizing the * and + string operators
     print('-' * 19)
@@ -172,51 +191,55 @@ while game_start == 0:
         print('an option. Good luck!\n')
         input('Press ENTER to continue')
     elif home_screen_selection == 1:
-        game_start = 1
+        player.game_start = 1
     else:
         print('Enter a valid selection\n')
 
 # Get player name use later
 print('Enter your name:')
-player_name = str(input())
+player.name = str(input())
 
 # Get player age for use later and check to make sure it is an integer
 print('Enter your age:')
-player_age = input()
-while isinstance(player_age, int) == 0:
+player.age = input()
+while isinstance(player.age, int) == 0:
     try:
-        player_age = int(player_age)
+        player.age = int(player.age)
     except ValueError:
         print('Please enter a whole number: ')
-        player_age = input()
+        player.age = input()
 
 # Returns game_start to 0 for difficulty setting loop
-game_start = 0
+player.game_start = 0
 
 # Prompts for difficulty setting (determines starting health)
-while game_start == 0:
+while player.game_start == 0:
     print('Choose a difficulty setting:')
     print('1) Easy    2) Medium  3) Hard')
     difficulty_choice = get_player_input()
     if difficulty_choice == 1:
-        health = 50
-        game_start = 1
+        player.health = 50
+        player.game_start = 1
+        player.difficulty = 'EASY'
         print('You got this!\n')
         input('Press ENTER to continue')
     elif difficulty_choice == 2:
-        health = 35
-        game_start = 1
+        player.health = 35
+        player.game_start = 1
+        player.difficulty = 'MEDIUM'
         print('Good luck!\n')
         input('Press ENTER to continue')
     elif difficulty_choice == 3:
-        health = 20
-        game_start = 1
+        player.health = 20
+        player.game_start = 1
+        player.difficulty = 'HARD'
         print('Uh oh... I hope you make it!\n')
         input('Press ENTER to continue')
     # Secret to get the max starting health
     elif difficulty_choice == 42:
-        health = 100
-        game_start = 1
+        player.health = 100
+        player.game_start = 1
+        player.difficulty = 'CHEATER'
         print('Wait... How did you know that? MAX HEALTH!!\n')
         input('Press ENTER to continue')
     else:
@@ -224,83 +247,80 @@ while game_start == 0:
 
 # Generate code numbers that will be on walls using player age
 # Utilizes ** (exponent), / (division), // (floor division), % (modulus)
-code_number1 = int((player_age ** 3 / 2) // 1000 % 10)
-code_number2 = int((player_age ** 3 / 2) // 100 % 10)
-code_number3 = int((player_age ** 3 / 2) // 10 % 10)
-code_number4 = int((player_age ** 3 / 2) % 10)
-
-# Generates the device code and multiplies it by 1 so I can use the * operator
-device_code = code_number1 + code_number2 + code_number3 + code_number4 * 1
+blue_room.wall_code = int((player.age ** 3 / 2) // 1000 % 10)
+yellow_room.wall_code = int((player.age ** 3 / 2) // 100 % 10)
+green_room.wall_code = int((player.age ** 3 / 2) // 10 % 10)
+red_room.wall_code = int((player.age ** 3 / 2) % 10)
 
 # Start of the game loop that checks for win condition and health
-while win == 0 and health > 0:
+while player.win == 0 and player.health > 0:
 
     # Door lock checks
-    if bulb_blue and bulb_yellow == 'ON' and bulb_red == 'OFF':
-        lock_green = 1
+    if blue_room.bulb and yellow_room.bulb == 'ON' and red_room.bulb == 'OFF':
+        green_room.lock = 1
     else:
-        lock_green = 0
-    if bulb_blue and bulb_red == 'ON' and bulb_yellow == 'OFF':
-        lock_purple = 1
+        green_room.lock = 0
+    if blue_room.bulb and red_room.bulb == 'ON' and yellow_room.bulb == 'OFF':
+        purple_room.lock = 1
     else:
-        lock_purple = 0
+        purple_room.lock = 0
 
     # Blue room events
-    if current_room == "Blue":
+    if player.current_room == "Blue":
         get_room_info()
         player_input = get_player_input()
         if player_input == 1:
-            if lock_green == 1:
-                current_room = "Green"
+            if green_room.lock == 1:
+                player.current_room = "Green"
                 print('You go through the green door')
-            elif lock_green == 0:
+            else:
                 print('The door is locked')
         elif player_input == 2:
-            current_room = "Yellow"
+            player.current_room = "Yellow"
             print('You go through the yellow door')
         elif player_input == 3:
-            if have_red_key == 0 and lock_red == 0:
+            if player.have_red_key == 0 and red_room.lock == 0:
                 print('The door is locked')
-            elif have_red_key == 1 and lock_red == 0:
-                have_red_key = 0
-                lock_red = 1
-                current_room = "Red"
+            elif player.have_red_key == 1 and red_room.lock == 0:
+                player.have_red_key = 0
+                red_room.lock = 1
+                player.current_room = "Red"
                 print('You used the red key to unlock the red door')
             else:
-                current_room = "Red"
+                player.current_room = "Red"
                 print('You go through the red door')
         elif player_input == 4:
-            if lock_purple == 0:
+            if purple_room.lock == 0:
                 print('The door is locked')
             else:
-                current_room = "Purple"
+                player.current_room = "Purple"
                 print('You go through the purple door')
         elif player_input == 5:
-            if bulb_blue == "OFF":
-                bulb_blue = "ON"
-                print('You flipped the switch ' + bulb_blue)
+            if blue_room.bulb == "OFF":
+                blue_room.bulb = "ON"
+                print('You flipped the switch ' + blue_room.bulb)
             else:
-                bulb_blue = "OFF"
-                print('You flipped the switch ' + bulb_blue)
+                blue_room.bulb = "OFF"
+                print('You flipped the switch ' + blue_room.bulb)
         else:
             print('Enter a valid selection')
 
     # Yellow room events
-    elif current_room == "Yellow":
+    elif player.current_room == "Yellow":
         get_room_info()
         player_input = get_player_input()
         if player_input == 3:
-            current_room = "Blue"
+            player.current_room = "Blue"
             print('You go through the blue door')
         elif player_input == 5:
-            if bulb_yellow == "OFF":
-                bulb_yellow = "ON"
-                print('You flipped the switch ' + bulb_yellow)
+            if yellow_room.bulb == "OFF":
+                yellow_room.bulb = "ON"
+                print('You flipped the switch ' + yellow_room.bulb)
             else:
-                bulb_yellow = "OFF"
-                print('You flipped the switch ' + bulb_yellow)
+                yellow_room.bulb = "OFF"
+                print('You flipped the switch ' + yellow_room.bulb)
         elif player_input == 6:
-            if bulb_red_power == 0:
+            if red_room.bulb_power == 0:
                 print('The device has a keypad that requires a code')
                 print('A message above it reads THE SUM OF THE FOUR')
                 print('Enter a code:')
@@ -311,8 +331,9 @@ while win == 0 and health > 0:
                     except ValueError:
                         print('Enter a valid numerical code')
                         code_entered = input()
-                if code_entered == device_code:
-                    bulb_red_power = 1
+                if code_entered == blue_room.wall_code + yellow_room.wall_code\
+                        + green_room.wall_code + red_room.wall_code * 1:
+                    red_room.bulb_power = 1
                     print('Power has been supplied somewhere')
                 else:
                     print('Nothing happened')
@@ -322,44 +343,45 @@ while win == 0 and health > 0:
             print('Enter a valid selection')
 
     # Green room events
-    elif current_room == "Green":
+    elif player.current_room == "Green":
         get_room_info()
         player_input = get_player_input()
         if player_input == 4:
-            current_room = "Blue"
+            player.current_room = "Blue"
             print('You go through the blue door')
-        elif player_input == 5 and have_red_key == 0 and lock_red == 0:
-            have_red_key = 1
+        elif player_input == 5 and player.have_red_key == 0 and\
+                red_room.lock == 0:
+            player.have_red_key = 1
             print('You picked up the red key')
         else:
             print('Enter a valid selection')
 
     # Red room events
-    elif current_room == "Red":
+    elif player.current_room == "Red":
         get_room_info()
         player_input = get_player_input()
         if player_input == 2:
-            current_room = "Blue"
+            player.current_room = "Blue"
             print('You go through the blue door')
         elif player_input == 5:
-            if bulb_red_power == 0:
+            if red_room.bulb_power == 0:
                 print('The light bulb has no power')
             else:
-                if bulb_red == "OFF":
-                    bulb_red = "ON"
-                    print('You flipped the switch ' + bulb_red)
+                if red_room.bulb == "OFF":
+                    red_room.bulb = "ON"
+                    print('You flipped the switch ' + red_room.bulb)
                 else:
-                    bulb_red = "OFF"
-                    print('You flipped the switch ' + bulb_red)
+                    red_room.bulb = "OFF"
+                    print('You flipped the switch ' + red_room.bulb)
         else:
             print('Enter a valid selection')
 
     # Purple room events
-    elif current_room == "Purple":
+    elif player.current_room == "Purple":
         get_room_info()
         player_input = get_player_input()
         if player_input == 1:
-            current_room = "Blue"
+            player.current_room = "Blue"
             print('You go through the blue door')
         elif player_input == 4:
             print('There is device locking the EXIT that'
@@ -368,9 +390,9 @@ while win == 0 and health > 0:
             print('SPEAK THE NAME OF THE WISE ONE TO BE FREE')
             print('Type your answer:')
             player_answer = str(input())
-            if player_answer == player_name:
+            if player_answer == player.name:
                 print('The door unlocks and you swing it open.')
-                win = 1
+                player.win = 1
             else:
                 print('Nothing happened')
         else:
@@ -380,11 +402,11 @@ while win == 0 and health > 0:
     input('\nPress ENTER to continue')
 
     # Decrements health variable with a shortcut operator
-    health -= 1
+    player.health -= 1
 
-if win == 1:
-    get_win_screen(health)
+if player.win == 1:
+    get_win_screen(player.health)
 
 else:
     print('\nYou have died from exhaustion.')
-    print('Better luck next time, scrub.')
+    print('Better luck next time!')
