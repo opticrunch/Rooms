@@ -132,7 +132,8 @@ def get_win_screen(ending_health):
                       '\n     ____________  CONGRATULATIONS!'
                       '\n    |    ROOMS   |             YOU'
                       '\n    |     __     |     \o/   ESCAPED'
-                      '\n    |    |  |    |      |    WITH ' + str(ending_health) +
+                      '\n    |    |  |    |      |    WITH '
+                      + str(ending_health) +
                       '\n    |    |  |    |     / \   HEALTH'
                       '\n ______________________________________')
 
@@ -149,7 +150,7 @@ lock_red = bool(0)
 lock_purple = bool(0)
 win = bool(0)
 game_start = bool(0)
-health = int(51)
+health = int(50)
 
 # Title screen loop start
 while game_start == 0:
@@ -198,17 +199,17 @@ while game_start == 0:
     print('1) Easy    2) Medium  3) Hard')
     difficulty_choice = get_player_input()
     if difficulty_choice == 1:
-        health = 51
+        health = 50
         game_start = 1
         print('You got this!\n')
         input('Press ENTER to continue')
     elif difficulty_choice == 2:
-        health = 36
+        health = 35
         game_start = 1
         print('Good luck!\n')
         input('Press ENTER to continue')
     elif difficulty_choice == 3:
-        health = 21
+        health = 20
         game_start = 1
         print('Uh oh... I hope you make it!\n')
         input('Press ENTER to continue')
@@ -231,13 +232,8 @@ code_number4 = int((player_age ** 3 / 2) % 10)
 # Generates the device code and multiplies it by 1 so I can use the * operator
 device_code = code_number1 + code_number2 + code_number3 + code_number4 * 1
 
-# Start of the game loop
-while win == 0:
-
-    # Decrements health variable with a shortcut operator and checks health
-    health -= 1
-    if health == 0:
-        break
+# Start of the game loop that checks for win condition and health
+while win == 0 and health > 0:
 
     # Door lock checks
     if bulb_blue and bulb_yellow == 'ON' and bulb_red == 'OFF':
@@ -383,9 +379,12 @@ while win == 0:
     # Prompts the player to press enter to continue
     input('\nPress ENTER to continue')
 
+    # Decrements health variable with a shortcut operator
+    health -= 1
+
 if win == 1:
     get_win_screen(health)
 
 else:
     print('\nYou have died from exhaustion.')
-    print('Better luck next time!')
+    print('Better luck next time, scrub.')
