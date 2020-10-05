@@ -161,7 +161,7 @@ def get_win_screen(player):
                       '\n ______________________________________')
 
 
-# Define the play game class
+# Define the play game function
 def play_game():
 
     # Initialize the player and room classes
