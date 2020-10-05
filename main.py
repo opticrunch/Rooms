@@ -1,6 +1,29 @@
 # Stephen Royka
 # ROOMS: FIVE COLORS is a text based puzzle adventure game
 
+# Define the class player
+class Player:
+    """Class to store all player attributes and eliminate need for
+    global variables"""
+    name = str()
+    age = int()
+    difficulty = str()
+    current_room = str('Blue')
+    health = int()
+    have_red_key = bool(0)
+    win = bool(0)
+    game_start = bool(0)
+
+
+# Define the room class
+class Room:
+    """Class to store attributes of the rooms"""
+    lock = bool(0)
+    bulb = 'OFF'
+    bulb_power = bool(0)
+    wall_code = int()
+
+
 # Function to print the HUD and room map current_room value
 def print_room_hud(player):
     print('_______________________________________________')
@@ -128,6 +151,7 @@ def get_win_screen(player):
     certificate = open('CertificateOfVictory.txt', 'w')
     certificate.write('This certificate is proof that\n' + player.name +
                       '\nescaped the mysterious\nROOMS: Five Colors'
+                      '\non ' + player.difficulty + ' difficulty.'
                       '\n ______________________________________'
                       '\n     ____________  CONGRATULATIONS!'
                       '\n    |    ROOMS   |             YOU'
@@ -138,31 +162,9 @@ def get_win_screen(player):
                       '\n ______________________________________')
 
 
-# Define the class player
-class Player:
-    """Class to store all player attributes and eliminate need for
-    global variables"""
-    name = str()
-    age = int()
-    difficulty = str()
-    current_room = str('Blue')
-    health = int()
-    have_red_key = bool(0)
-    win = bool(0)
-    game_start = bool(0)
-
-
-# Define the room class
-class Room:
-    """Class to store attributes of the rooms"""
-    lock = bool(0)
-    bulb = 'OFF'
-    bulb_power = bool(0)
-    wall_code = int()
-
-
 # Define the play game class
 def play_game():
+
     # Initialize the player and room classes
     player = Player()
     blue_room = Room()
@@ -391,8 +393,8 @@ def play_game():
                 print('A message is scribbled above it:')
                 print('SPEAK THE NAME OF THE WISE ONE TO BE FREE')
                 print('Type your answer:')
-                player_answer = str(input())
-                if player_answer == player.name:
+                answer = str(input())
+                if answer == player.name:
                     print('The door unlocks and you swing it open.')
                     player.win = 1
                 else:
