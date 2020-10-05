@@ -47,13 +47,12 @@ def print_room_hud(player):
         print('|                   |')
     if player.have_red_key == 1:
         print('|----|___   ___|----|    RED KEY')
-    else:
-        print('|----|___   ___|----|')
-    if player.have_red_key == 1:
         print('     |         |          0--m')
     elif player.current_room == "Purple":
+        print('|----|___   ___|----|')
         print('     |    X    |')
     else:
+        print('|----|___   ___|----|')
         print('     |         |')
     print('     |___   ___|')
     print('')
@@ -408,13 +407,15 @@ def play_game():
         # Decrements health variable with a shortcut operator
         player.health -= 1
 
+    # Calls win screen function if player has met win condition
     if player.win == 1:
         get_win_screen(player)
 
+    # Death text if player win condition is not met
     else:
         print('\nYou have died from exhaustion.')
         print('Better luck next time!')
 
 
-# Plays the game
+# Calls the play game function to play the game
 play_game()
