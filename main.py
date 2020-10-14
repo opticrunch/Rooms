@@ -308,6 +308,15 @@ def play_game():
                 else:
                     blue_room.bulb = "OFF"
                     print('You flipped the switch ' + blue_room.bulb)
+            elif player_input == 0:
+                print('There is a faded orange panel on floor.')
+                if yellow_room.bulb == 'ON' and red_room.bulb == 'ON'\
+                    and blue_room.bulb == 'OFF':
+                    print('You open it.')
+                    print('A creepy man looks up at you disapprovingly.')
+                    print('Better not go in here...')
+                else:
+                    print('It appears to be locked tight.')
             else:
                 print('Enter a valid selection')
 
