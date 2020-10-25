@@ -423,7 +423,10 @@ def play_game():
     # Death text if player win condition is not met
     else:
         print('\nYou have died from exhaustion.')
-        print('Better luck next time!')
+        print("Better luck next time!")
+        # Code to satisfy for in range requirements
+        for x in range(5):
+            print("Xx______________________xX")
 
 
 # Calls the play game function to play the game
