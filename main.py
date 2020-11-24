@@ -149,8 +149,8 @@ def get_win_screen(player):
     # Creates a file and writes to it
     certificate = open('CertificateOfVictory.txt', 'w')
     certificate.write('This certificate is proof that\n' + player.name +
-                      '\nescaped the mysterious\nROOMS: Five Colors'
-                      '\non ' + player.difficulty + ' difficulty.'
+                      '\nescaped the mysterious\nROOMS: Five Colors' +
+                      '\non ' + player.difficulty + ' difficulty.' +
                       '\n ______________________________________'
                       '\n     ____________  CONGRATULATIONS!'
                       '\n    |    ROOMS   |             YOU'
@@ -163,7 +163,6 @@ def get_win_screen(player):
 
 # Define the play game function
 def play_game():
-
     # Initialize the player and room classes
     player = Player()
     blue_room = Room()
@@ -257,12 +256,12 @@ def play_game():
     while player.win == 0 and player.health > 0:
 
         # Door lock checks
-        if blue_room.bulb and yellow_room.bulb == 'ON'\
+        if blue_room.bulb and yellow_room.bulb == 'ON' \
                 and red_room.bulb == 'OFF':
             green_room.lock = 1
         else:
             green_room.lock = 0
-        if blue_room.bulb and red_room.bulb == 'ON'\
+        if blue_room.bulb and red_room.bulb == 'ON' \
                 and yellow_room.bulb == 'OFF':
             purple_room.lock = 1
         else:
@@ -345,8 +344,8 @@ def play_game():
                         except ValueError:
                             print('Enter a valid numerical code')
                             code_entered = input()
-                    if code_entered == blue_room.wall_code\
-                            + yellow_room.wall_code + green_room.wall_code\
+                    if code_entered == blue_room.wall_code \
+                            + yellow_room.wall_code + green_room.wall_code \
                             + red_room.wall_code * 1:
                         red_room.bulb_power = 1
                         print('Power has been supplied somewhere')
@@ -363,7 +362,7 @@ def play_game():
             if player_input == 4:
                 player.current_room = "Blue"
                 print('You go through the blue door')
-            elif player_input == 5 and player.have_red_key == 0 and\
+            elif player_input == 5 and player.have_red_key == 0 and \
                     red_room.lock == 0:
                 player.have_red_key = 1
                 print('You picked up the red key')
