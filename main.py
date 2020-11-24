@@ -1,9 +1,11 @@
-# Stephen Royka
-# ROOMS: FIVE COLORS is a text based puzzle adventure game
+"""ROOMS: Five Colors - COP 1500 Integration Project"""
+__author__ = "Stephen Royka"
+"""A text based puzzle adventure game written in Python"""
+
 
 # Define the class player
 class Player:
-    """Class to store all player attributes and eliminate need for
+    """This class stores all player attributes and eliminates the need for
     global variables"""
     name = str()
     age = int()
@@ -17,7 +19,7 @@ class Player:
 
 # Define the room class
 class Room:
-    """Class to store attributes of the rooms"""
+    """This class stores attributes of the various rooms"""
     lock = bool(0)
     bulb = 'OFF'
     bulb_power = bool(0)
@@ -26,6 +28,7 @@ class Room:
 
 # Function to print the HUD and room map current_room value
 def print_room_hud(player):
+    """This function prints the heads up display to show essential info"""
     print('_______________________________________________')
     print('PLAYER: ' + player.name + ' | AGE: ' + str(player.age)
           + ' | ROOM: ' + player.current_room + ' | HEALTH: '
@@ -60,6 +63,7 @@ def print_room_hud(player):
 
 # Function to print the room info based on the current_room value
 def get_room_info(player, blue_room, yellow_room, green_room, red_room):
+    """This function prints the description of the room the player is in"""
     if player.current_room == "Blue":
         print('You are in a room with blue walls.')
         print('There is a blue light bulb on the wall switched to '
@@ -124,6 +128,7 @@ def get_room_info(player, blue_room, yellow_room, green_room, red_room):
 
 # Function that gets player input and makes sure it is an integer
 def get_player_input():
+    """This function gets and returns player input"""
     player_choice = input()
     while isinstance(player_choice, int) == 0:
         try:
@@ -136,7 +141,7 @@ def get_player_input():
 
 # Function that prints the win screen (takes an argument)
 def get_win_screen(player):
-    # Win screen out of game loop
+    """This function prints the win screen if the player has won"""
     print(' ______________________________________')
     print('     ____________  CONGRATULATIONS!')
     print('    |    ROOMS   |             YOU')
@@ -163,6 +168,7 @@ def get_win_screen(player):
 
 # Define the play game function
 def play_game():
+    """This is the main game loop function in which the game takes place"""
     # Initialize the player and room classes
     player = Player()
     blue_room = Room()
