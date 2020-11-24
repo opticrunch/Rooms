@@ -3,7 +3,6 @@ __author__ = "Stephen Royka"
 """A text based puzzle adventure game written in Python"""
 
 
-# Define the class player
 class Player:
     """This class stores all player attributes and eliminates the need for
     global variables"""
@@ -17,7 +16,6 @@ class Player:
     game_start = bool(0)
 
 
-# Define the room class
 class Room:
     """This class stores attributes of the various rooms"""
     lock = bool(0)
@@ -26,9 +24,9 @@ class Room:
     wall_code = int()
 
 
-# Function to print the HUD and room map current_room value
 def print_room_hud(player):
-    """This function prints the heads up display to show essential info"""
+    """This function prints the heads up display to show essential info
+    based on the player class attributes"""
     print('_______________________________________________')
     print('PLAYER: ' + player.name + ' | AGE: ' + str(player.age)
           + ' | ROOM: ' + player.current_room + ' | HEALTH: '
@@ -61,9 +59,9 @@ def print_room_hud(player):
     print('')
 
 
-# Function to print the room info based on the current_room value
 def get_room_info(player, blue_room, yellow_room, green_room, red_room):
-    """This function prints the description of the room the player is in"""
+    """This function prints the description of the room the player is in
+    based on the player and room attributes"""
     if player.current_room == "Blue":
         print('You are in a room with blue walls.')
         print('There is a blue light bulb on the wall switched to '
@@ -86,9 +84,9 @@ def get_room_info(player, blue_room, yellow_room, green_room, red_room):
               ' supply power somewhere.')
         print('There is a blue door to the East.')
         print('______________ENTER A SELECTION______________')
-        print('       1)                     5) Light bulb')
-        print('2)            3) Go East      6) Device')
-        print('       4)')
+        print('       1)----                 5) Light bulb')
+        print('2)----        3) Go East      6) Device')
+        print('       4)----')
     elif player.current_room == "Green":
         print('You are in a room with green walls.')
         print('There is a number ' + str(green_room.wall_code)
@@ -98,10 +96,10 @@ def get_room_info(player, blue_room, yellow_room, green_room, red_room):
         print('There is a blue door to the South.')
         print('______________ENTER A SELECTION______________')
         if player.have_red_key == 0 and red_room.lock == 0:
-            print('       1)                     5) Red key')
+            print('       1)----                 5) Red key')
         else:
-            print('       1)')
-        print('2)            3)')
+            print('       1)----')
+        print('2)----        3)----')
         print('       4) Go South')
     elif player.current_room == "Red":
         print('You are in a room with red walls.')
@@ -111,9 +109,9 @@ def get_room_info(player, blue_room, yellow_room, green_room, red_room):
               + red_room.bulb + '.')
         print('There is a blue door to the West.')
         print('______________ENTER A SELECTION______________')
-        print('       1)                     5) Light bulb')
-        print('2) Go West    3)')
-        print('       4)')
+        print('       1)----                 5) Light bulb')
+        print('2) Go West    3)----')
+        print('       4)----')
     elif player.current_room == "Purple":
         print('You are in a room with purple walls.')
         print('There is a red light bulb on the wall switched to '
@@ -122,11 +120,10 @@ def get_room_info(player, blue_room, yellow_room, green_room, red_room):
               ' labeled EXIT to the South.')
         print('______________ENTER A SELECTION______________')
         print('       1) Go North')
-        print('2)            3)')
+        print('2)----        3)----')
         print('       4) Exit')
 
 
-# Function that gets player input and makes sure it is an integer
 def get_player_input():
     """This function gets and returns player input"""
     player_choice = input()
@@ -139,9 +136,9 @@ def get_player_input():
     return player_choice
 
 
-# Function that prints the win screen (takes an argument)
 def get_win_screen(player):
-    """This function prints the win screen if the player has won"""
+    """This function prints the win screen if the player has won and tells
+    the player how much health remained based on the player attributes"""
     print(' ______________________________________')
     print('     ____________  CONGRATULATIONS!')
     print('    |    ROOMS   |             YOU')
@@ -166,7 +163,6 @@ def get_win_screen(player):
                       '\n ______________________________________')
 
 
-# Define the play game function
 def play_game():
     """This is the main game loop function in which the game takes place"""
     # Initialize the player and room classes
