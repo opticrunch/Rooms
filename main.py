@@ -125,7 +125,8 @@ def get_room_info(player, blue_room, yellow_room, green_room, red_room):
 
 
 def get_player_input():
-    """This function gets and returns player input"""
+    """This function gets and returns player input while ensuring
+    it is an integer"""
     player_choice = input()
     while isinstance(player_choice, int) == 0:
         try:
@@ -148,7 +149,7 @@ def get_win_screen(player):
     print(' ______________________________________')
     print('Great job, ' + player.name + '!')
 
-    # Creates a file and writes to it
+    # Creates a file and writes the victory screen to it
     certificate = open('CertificateOfVictory.txt', 'w')
     certificate.write('This certificate is proof that\n' + player.name +
                       '\nescaped the mysterious\nROOMS: Five Colors' +
